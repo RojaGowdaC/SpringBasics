@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                             http://www.springframework.org/schema/context
+                             http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    <context:property-placeholder location="classpath*:propertyFile.properties"/>
+
+    <bean id="dateFormatter" class="com.spring.Formatter.DateFormat">
+    </bean>
+    <bean id="dept1" class="com.spring.model.Department">
+        <property name="dept" value="CS"/>
+        <property name="createdOn">
+            <bean factory-bean="dateFormatter" factory-method="formatter">
+                <constructor-arg value="${createdOn}"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="emp" class="com.spring.model.Employee">
+        <property name="name" value="${name}"/>
+        <property name="age" value="${age}"/>
+        <property name="salary" value="${salary}"/>
+        <constructor-arg ref="dept1"/>
+        <property name="taskList">
+            <list>
+                <value>Documentation</value>
+                <value>Sprint Cycle</value>
+                <value>Review</value>
+            </list>
+        </property>
+    </bean>
+</beans>
